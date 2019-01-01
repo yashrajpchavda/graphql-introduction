@@ -15,7 +15,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "graphql": "^14.0.2",
-    "graphql-tools": "^4.0.3"
+    "graphql-tools": "^4.0.3",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
