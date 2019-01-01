@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start:json-server": "json-server --watch db.json"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +17,11 @@
     "express": "^4.16.4",
     "graphql": "^14.0.2",
     "graphql-tools": "^4.0.3",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "node-fetch": "^2.3.0"
   },
   "devDependencies": {
+    "json-server": "^0.14.2",
     "nodemon": "^1.18.9"
   }
 }

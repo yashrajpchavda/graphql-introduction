@@ -4,6 +4,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const find = require('lodash/find');
 
+const { fetchData } = require('./api');
+
 const users = [
     { id: '1', firstName: 'Alex', age: 22 },
     { id: '2', firstName: 'Robin', age: 34 },
@@ -29,7 +31,7 @@ const typeDefs = [`
 const resolvers = {
     Query: {
         user: (parentValue, { id }) => {
-            return find(users, { id });
+            return fetchData(`users/${id}`);
         }
     }
 };
