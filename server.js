@@ -4,8 +4,14 @@ const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const typeDefs = [`
+    type User {
+        id: ID
+        firstName: String
+        age: Int
+    }
+
     type Query {
-        hello: String
+        user(id: ID!): User
     }
 
     schema {
@@ -15,7 +21,13 @@ const typeDefs = [`
 
 const resolvers = {
     Query: {
-        hello: () => 'Hello World!'
+        user: (parentValue, { id }) => {
+            return {
+                id,
+                firstName: 'James',
+                age: 22
+            }
+        }
     }
 };
 
