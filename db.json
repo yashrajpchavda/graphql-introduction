@@ -4,35 +4,35 @@
       "id": "1",
       "firstName": "Bill",
       "age": 38,
-      "companyId": "1"
+      "companyId": 1
     },
     {
       "id": "2",
       "firstName": "Jason",
       "age": 32,
-      "companyId": "1"
+      "companyId": 1
     },
     {
       "id": "3",
       "firstName": "Jimmy",
       "age": 29,
-      "companyId": "2"
+      "companyId": 2
     },
     {
       "firstName": "Douglas",
       "age": 50,
-      "companyId": 1,
+      "companyId": 2,
       "id": "odPx6EN"
     }
   ],
   "companies": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Google",
       "description": "Google is awesome!"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Apple",
       "description": "Apple makes great phones!"
     }

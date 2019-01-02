@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
-const { fetchData, postData, deleteData } = require('./api');
+const { fetchData, postData, deleteData, patchData } = require('./api');
 
 const typeDefs = [`
     type User {
@@ -26,13 +26,21 @@ const typeDefs = [`
         companyId: Int
     }
 
+    input EditUserInput {
+        id: ID!
+        firstName: String
+        age: Int
+        companyId: Int
+    }
+
     type Query {
         user(id: ID!): User
         company(id: ID!): Company
     }
 
     type Mutation {
-        addUser(userInput: AddUserInput): User
+        addUser(user: AddUserInput): User
+        editUser(user: EditUserInput): User
         deleteUser(id: ID!): User
     }
 
@@ -62,11 +70,14 @@ const resolvers = {
         }
     },
     Mutation: {
-        addUser: (parentValue, { userInput }, context, info) => {
-            return postData(`users`, { ...userInput });
+        addUser: (parentValue, { user }, context, info) => {
+            return postData(`users`, { ...user });
         },
         deleteUser: (parentValue, { id }) => {
             return deleteData(`users/${id}`);
+        },
+        editUser: (parentValue, { user }) => {
+            return patchData(`users/${user.id}`, user);
         }
     }
 };

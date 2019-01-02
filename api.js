@@ -20,5 +20,13 @@ module.exports = {
         return fetch(`${API_URL}${resource}`, {
             method: 'delete'
         }).then(res => res.json());
-    }
+    },
+
+    patchData: (resource, body) => {
+        return fetch(`${API_URL}${resource}`, {
+            method: 'patch',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json());
+    },
 }
