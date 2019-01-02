@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
-const { find } = require('lodash');
 
 const { fetchData } = require('./api');
 
@@ -18,10 +17,12 @@ const typeDefs = [`
         id: ID
         name: String
         description: String
+        users: [User]
     }
 
     type Query {
         user(id: ID!): User
+        company(id: ID!): Company
     }
 
     schema {
@@ -33,11 +34,19 @@ const resolvers = {
     Query: {
         user: (parentValue, { id }, context, info) => {
             return fetchData(`users/${id}`);
+        },
+        company: (parentValue, { id }, context, info) => {
+            return fetchData(`companies/${id}`);
         }
     },
     User: {
         company: ({ companyId }) => {
             return fetchData(`companies/${companyId}`);
+        }
+    },
+    Company: {
+        users: ({ id: companyId }) => {
+            return fetchData(`companies/${companyId}/users`);
         }
     }
 };
@@ -51,4 +60,6 @@ server.applyMiddleware({ app });
 
 const port = 4000;
 
-app.listen(port, () => { console.log(`Server started at http://localhost:${port}`); });
+app.listen(port, () => { 
+    console.log(`Server started at http://localhost:${port}`); 
+});
