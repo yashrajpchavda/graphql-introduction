@@ -33,9 +33,12 @@ const typeDefs = [`
         companyId: Int
     }
 
+    union SearchResult = User | Company
+
     type Query {
         user(id: ID!): User
-        company(id: ID!): Company
+        company(id: ID!): Company,
+        search(text: String): [SearchResult]
     }
 
     type Mutation {
@@ -57,6 +60,21 @@ const resolvers = {
         },
         company: (parentValue, { id }, context, info) => {
             return fetchData(`companies/${id}`);
+        },
+        search: (parentValue, { text }, context, info) => {
+            return [
+                {
+                    "firstName": "Douglas",
+                    "age": 50,
+                    "companyId": 2,
+                    "id": "odPx6EN"
+                },
+                {
+                    "id": 1,
+                    "name": "Google",
+                    "description": "Google is awesome!"
+                }
+            ]
         }
     },
     User: {
@@ -67,6 +85,19 @@ const resolvers = {
     Company: {
         users: ({ id: companyId }) => {
             return fetchData(`companies/${companyId}/users`);
+        }
+    },
+    SearchResult: {
+        __resolveType: (obj, context, info) => {
+            if (obj.name) {
+                return 'Company';
+            }
+            
+            if (obj.firstName) {
+                return 'User';
+            }
+
+            return null;
         }
     },
     Mutation: {
