@@ -4,19 +4,11 @@ const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const typeDefs = [`
-    type Query {
-        hello: String
-    }
-
-    schema {
-        query: Query
-    }
+    
 `];
 
 const resolvers = {
-    Query: {
-        hello: () => 'Hello World!'
-    }
+    
 };
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
