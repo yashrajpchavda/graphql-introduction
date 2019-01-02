@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
-const { fetchData } = require('./api');
+const { fetchData, postData } = require('./api');
 
 const typeDefs = [`
     type User {
@@ -20,13 +20,24 @@ const typeDefs = [`
         users: [User]
     }
 
+    input AddUserInput {
+        firstName: String!
+        age: Int!
+        companyId: Int
+    }
+
     type Query {
         user(id: ID!): User
         company(id: ID!): Company
     }
 
+    type Mutation {
+        addUser(userInput: AddUserInput): User
+    }
+
     schema {
         query: Query
+        mutation: Mutation
     }
 `];
 
@@ -47,6 +58,11 @@ const resolvers = {
     Company: {
         users: ({ id: companyId }) => {
             return fetchData(`companies/${companyId}/users`);
+        }
+    },
+    Mutation: {
+        addUser: (parentValue, { userInput }, context, info) => {
+            return postData(`users`, { ...userInput });
         }
     }
 };
