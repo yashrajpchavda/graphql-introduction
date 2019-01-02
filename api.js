@@ -14,5 +14,11 @@ module.exports = {
             body: JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.json());
+    },
+
+    deleteData: (resource) => {
+        return fetch(`${API_URL}${resource}`, {
+            method: 'delete'
+        }).then(res => res.json());
     }
 }
